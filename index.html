@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet"><style>body{margin:0;background:#171411}html{scroll-behavior:smooth}a{color:inherit;text-decoration:none}a:hover{color:inherit}input::placeholder{color:var(--mut);opacity:.6}@keyframes dcblink{50%{opacity:0}}@keyframes dcpulse{0%{transform:scale(.9);opacity:.9}100%{transform:scale(2.1);opacity:0}}</style></helmet>
+<div ref="{{ rootA }}" style="--bg:#171411;--bg2:#1f1b17;--fg:#ece5d9;--mut:#9d9486;--line:rgba(236,229,217,.12);--acc:#7fe0a0;--accbg:rgba(127,224,160,.10);--ask:#f0907c;--askbg:rgba(240,144,124,.12);--vi:none;--en:inline;--viOp:1;--enOp:.4;--dk:inline;--lt:none;--px:clamp(20px,5vw,64px);min-height:100vh;overflow-x:clip;background:var(--bg);color:var(--fg);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:15px;line-height:1.65;transition:background-color .35s,color .35s">
+
+<header style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;padding:16px var(--px);border-bottom:1px solid var(--line);font-size:13px">
+<div style="display:flex;align-items:center;gap:2px"><span style="color:var(--acc);font-weight:700">whoant@dev</span><span style="color:var(--mut)">:~$</span></div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 26px"><nav style="display:flex;flex-wrap:wrap;gap:6px 22px">
+<a href="#a-about" style="color:var(--mut)" style-hover="color:var(--acc)">~/about</a>
+<a href="#a-exp" style="color:var(--mut)" style-hover="color:var(--acc)">~/exp</a>
+<a href="#a-projects" style="color:var(--mut)" style-hover="color:var(--acc)">~/projects</a>
+<a href="#a-stack" style="color:var(--mut)" style-hover="color:var(--acc)">~/stack</a>
+<a href="#a-arch" style="color:var(--mut)" style-hover="color:var(--acc)">~/arch</a>
+<a href="#a-contact" style="color:var(--mut)" style-hover="color:var(--acc)">~/contact</a>
+</nav>
+<div style="display:flex;align-items:center;gap:10px">
+<button onClick="{{ a.toggleTheme }}" style="background:transparent;border:1px solid var(--line);border-radius:6px;color:var(--fg);font:inherit;font-size:12px;padding:6px 12px;cursor:pointer"><span style="display:var(--dk)">● dark</span><span style="display:var(--lt)">○ light</span></button>
+</div>
+</div>
+</header>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(36px,5vw,56px);align-items:center;padding:clamp(48px,8vw,84px) var(--px) clamp(48px,8vw,80px)">
+<div>
+<div style="color:var(--mut);font-size:14px"><span style="color:var(--acc)">$</span> whoami</div>
+<h1 style="margin:18px 0 0;font-size:clamp(42px,9vw,68px);line-height:1.04;font-weight:800;letter-spacing:-0.045em">Võ Văn<br>Hoàng Tuân{{ cursor }}</h1>
+<div style="margin-top:20px;color:var(--acc);font-size:15px">// backend engineer — fintech &amp; blockchain</div>
+<p style="margin:22px 0 0;max-width:520px;color:var(--mut);text-wrap:pretty">I build backend infrastructure for digital asset exchanges — matching engines, wallets, ledgers — where every millisecond and every unit of balance has to be exact.</p>
+<div style="display:grid;grid-template-columns:110px minmax(0,1fr);row-gap:6px;margin-top:30px;font-size:13.5px">
+<span style="color:var(--mut)">location</span><span>Vietnam · UTC+07:00 · <span style="color:var(--acc)">{{ clock }}</span></span>
+<span style="color:var(--mut)">now</span><span>initX — exchange infrastructure</span>
+<span style="color:var(--mut)">status</span><span style="color:var(--acc)">● open to consulting &amp; freelance</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:34px">
+<a href="#a-contact" style="background:var(--acc);color:var(--bg);padding:11px 20px;border-radius:6px;font-weight:700;font-size:14px">[ get in touch ]</a>
+<a href="https://github.com/whoant" style="border:1px solid var(--line);padding:11px 20px;border-radius:6px;font-size:14px" style-hover="border-color:var(--acc)">[ github ↗ ]</a>
+</div>
+</div>
+<sc-if value="{{ showTerminal }}" hint-placeholder-val="{{ true }}">
+<div>
+<div onClick="{{ a.focus }}" style="background:var(--bg2);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13.5px;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);cursor:text">
+<div style="display:flex;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--line);color:var(--mut);font-size:12px"><span>~/whoant — zsh</span><span>interactive</span></div>
+<div ref="{{ a.outRef }}" style="height:300px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:1px">
+<sc-for list="{{ a.lines }}" as="l" hint-placeholder-count="3"><div style="white-space:pre-wrap;color:{{ l.c }}">{{ l.en }}</div></sc-for>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--line)">
+<span style="color:var(--acc);white-space:nowrap">guest@whoant ~ %</span>
+<input ref="{{ a.inRef }}" onKeyDown="{{ a.onKey }}" placeholder="help" style="flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--fg);font:inherit;caret-color:var(--acc)">
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+<sc-for list="{{ a.chips }}" as="c" hint-placeholder-count="6"><button onClick="{{ c.run }}" style="background:transparent;border:1px dashed var(--line);border-radius:4px;color:var(--mut);font:inherit;font-size:12px;padding:5px 10px;cursor:pointer" style-hover="color:var(--acc);border-color:var(--acc)">{{ c.label }}</button></sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+
+<section id="a-about" data-reveal="1" style="padding:clamp(48px,7vw,64px) var(--px);border-top:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:36px"><div style="font-size:14px"><span style="color:var(--acc)">$</span> cat about.md</div><div style="color:var(--mut);font-size:12px">01 / 06</div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(32px,5vw,64px)">
+<div style="display:flex;flex-direction:column;gap:18px">
+<p style="margin:0;font-size:clamp(18px,2.6vw,22px);line-height:1.55;letter-spacing:-0.01em;text-wrap:pretty">5+ years building backends in digital finance — from a Vietnamese retail exchange to institutional-grade exchange infrastructure.</p>
+<p style="margin:0;color:var(--mut);text-wrap:pretty">I care about systems where failure is not an option: order matching, balances, deposits and withdrawals, reconciliation. Outside work I write open source — 80 repos on GitHub, a few used and forked by the community.</p>
+</div>
+<div style="display:grid;grid-template-columns:100px minmax(0,1fr);row-gap:10px;font-size:13.5px;align-content:start;padding:20px 24px;border:1px solid var(--line);border-radius:8px;background:var(--bg2)">
+<span style="color:var(--mut)">name</span><span>"Võ Văn Hoàng Tuân"</span>
+<span style="color:var(--mut)">handle</span><span style="color:var(--acc)">"whoant"</span>
+<span style="color:var(--mut)">role</span><span>"backend engineer"</span>
+<span style="color:var(--mut)">domain</span><span>["exchange", "wallet", "payments"]</span>
+<span style="color:var(--mut)">fintech</span><span>2021 → now</span>
+<span style="color:var(--mut)">badges</span><span>arctic-code-vault, pull-shark×3</span>
+</div>
+</div>
+</section>
+
+<section id="a-exp" data-reveal="1" style="padding:clamp(48px,7vw,64px) var(--px);border-top:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:20px"><div style="font-size:14px"><span style="color:var(--acc)">$</span> git log --career</div><div style="color:var(--mut);font-size:12px">02 / 06</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:16px 40px;padding:30px 0;border-bottom:1px dashed var(--line)">
+<div style="flex:0 0 220px;font-size:13px;color:var(--mut);display:flex;flex-direction:column;gap:4px"><div><span style="color:var(--acc)">commit</span> 7f3a9c2</div><div>02/2026 → now</div><div style="margin-top:8px"><span style="padding:2px 8px;border:1px solid var(--acc);color:var(--acc);border-radius:4px;font-size:11px">HEAD → initx</span></div></div>
+<div style="flex:1 1 360px;min-width:0">
+<div style="font-size:clamp(20px,3vw,24px);font-weight:700;letter-spacing:-0.02em">Backend Engineer · <a href="https://initx.io/" style="color:var(--acc)">initX ↗</a></div>
+<p style="margin:10px 0 0;color:var(--mut);max-width:680px;text-wrap:pretty">Institutional-grade digital asset exchange infrastructure — a high-performance core exchange and matching engine for regulated and emerging markets.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px"><span style="font-size:12px;padding:3px 10px;background:var(--accbg);color:var(--acc);border-radius:4px">matching-engine</span><span style="font-size:12px;padding:3px 10px;background:var(--accbg);color:var(--acc);border-radius:4px">exchange-core</span><span style="font-size:12px;padding:3px 10px;background:var(--accbg);color:var(--acc);border-radius:4px">low-latency</span></div>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px 40px;padding:30px 0">
+<div style="flex:0 0 220px;font-size:13px;color:var(--mut);display:flex;flex-direction:column;gap:4px"><div><span style="color:var(--acc)">commit</span> 1c84e0b</div><div>10/2021 → 02/2026</div><div>4 yrs 4 mos</div></div>
+<div style="flex:1 1 360px;min-width:0">
+<div style="font-size:clamp(20px,3vw,24px);font-weight:700;letter-spacing:-0.02em">Backend Engineer · <a href="https://www.fiahub.com" style="color:var(--acc)">Fiahub ↗</a></div>
+<p style="margin:10px 0 0;color:var(--mut);max-width:680px;text-wrap:pretty">One of Vietnam's leading exchanges, with localized payments and integrated KYC/AML.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px"><span style="font-size:12px;padding:3px 10px;background:var(--accbg);color:var(--acc);border-radius:4px">payments</span><span style="font-size:12px;padding:3px 10px;background:var(--accbg);color:var(--acc);border-radius:4px">kyc-aml</span><span style="font-size:12px;padding:3px 10px;background:var(--accbg);color:var(--acc);border-radius:4px">wallet</span></div>
+</div>
+</div>
+</section>
+
+<section id="a-projects" data-reveal="1" style="padding:clamp(48px,7vw,64px) var(--px);border-top:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px"><div style="font-size:14px"><span style="color:var(--acc)">$</span> ls -la ./projects --sort=stars</div><div style="color:var(--mut);font-size:12px">03 / 06</div></div>
+<div style="font-size:14px">
+<a href="https://github.com/whoant/react-story-facebook" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;padding:16px 14px;border-bottom:1px solid var(--line);border-radius:4px" style-hover="background:var(--bg2)"><span style="flex:0 0 100px;color:var(--mut)">drwxr-xr-x</span><span style="flex:0 0 52px;color:var(--acc)">★ 77</span><span style="flex:0 0 52px;color:var(--mut)">⑂ 41</span><span style="flex:0 0 96px">JavaScript</span><span style="flex:1 1 200px;font-weight:700">react-story-facebook/</span><span style="flex:2 1 260px;color:var(--mut)">Facebook-style stories component for React</span></a>
+<a href="https://github.com/whoant/ZingMp3API" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;padding:16px 14px;border-bottom:1px solid var(--line);border-radius:4px" style-hover="background:var(--bg2)"><span style="flex:0 0 100px;color:var(--mut)">drwxr-xr-x</span><span style="flex:0 0 52px;color:var(--acc)">★ 74</span><span style="flex:0 0 52px;color:var(--mut)">⑂ 35</span><span style="flex:0 0 96px">Go</span><span style="flex:1 1 200px;font-weight:700">ZingMp3API/</span><span style="flex:2 1 260px;color:var(--mut)">Go client for the Zing MP3 API</span></a>
+<a href="https://github.com/whoant/download-udemy" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;padding:16px 14px;border-bottom:1px solid var(--line);border-radius:4px" style-hover="background:var(--bg2)"><span style="flex:0 0 100px;color:var(--mut)">drwxr-xr-x</span><span style="flex:0 0 52px;color:var(--acc)">★ 29</span><span style="flex:0 0 52px;color:var(--mut)">⑂ 22</span><span style="flex:0 0 96px">JavaScript</span><span style="flex:1 1 200px;font-weight:700">download-udemy/</span><span style="flex:2 1 260px;color:var(--mut)">Udemy course downloader</span></a>
+</div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:20px;font-size:13px;color:var(--mut)"><span>total 80 · 93 followers · arctic code vault contributor</span><a href="https://github.com/whoant?tab=repositories" style="color:var(--acc)">github.com/whoant →</a></div>
+</section>
+
+<section id="a-stack" data-reveal="1" style="padding:clamp(48px,7vw,64px) var(--px);border-top:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px"><div style="font-size:14px"><span style="color:var(--acc)">$</span> cat stack.toml</div><div style="color:var(--mut);font-size:12px">04 / 06</div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px;font-size:13.5px">
+<div style="padding:20px;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;gap:6px"><span style="color:var(--acc)">[backend]</span><span>lang = <span style="color:var(--acc)">["go", "rust", "nodejs"]</span></span><span>api = <span style="color:var(--acc)">["grpc", "rest", "ws"]</span></span></div>
+<div style="padding:20px;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;gap:6px"><span style="color:var(--acc)">[data]</span><span>db = <span style="color:var(--acc)">["postgresql", "redis"]</span></span><span>stream = <span style="color:var(--acc)">["kafka"]</span></span></div>
+<div style="padding:20px;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;gap:6px"><span style="color:var(--acc)">[infra]</span><span>run = <span style="color:var(--acc)">["docker", "k8s"]</span></span><span>obs = <span style="color:var(--acc)">["prometheus", "grafana"]</span></span></div>
+<div style="padding:20px;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;gap:6px"><span style="color:var(--acc)">[chain]</span><span>net = <span style="color:var(--acc)">["evm", "bitcoin"]</span></span><span>work = <span style="color:var(--acc)">["wallet", "indexer"]</span></span></div>
+</div>
+</section>
+
+<section id="a-arch" ref="{{ archRef }}" data-reveal="1" style="padding:clamp(48px,7vw,64px) var(--px);border-top:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:12px"><div style="font-size:14px"><span style="color:var(--acc)">$</span> cat architecture.txt</div><div style="color:var(--mut);font-size:12px">05 / 06</div></div>
+<p style="margin:0 0 44px;color:var(--mut)"># Matching engine — the lifecycle of one order. Click a point, or let it play.</p>
+<div style="position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr))">
+<div style="position:absolute;left:calc(100% / 12);right:calc(100% / 12);top:8px;height:1px;background:var(--line)"></div>
+<div style="position:absolute;left:calc(100% / 12);top:8px;height:1px;background:var(--acc);width:{{ me.progress }};transition:width .6s ease"></div>
+<sc-for list="{{ me.points }}" as="p" hint-placeholder-count="6"><button onClick="{{ p.go }}" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;background:transparent;border:0;padding:0;font:inherit;color:inherit;cursor:pointer"><span style="position:relative;width:17px;height:17px;border-radius:50%;box-sizing:border-box;background:{{ p.bg }};border:1px solid {{ p.bd }};transition:background-color .3s,border-color .3s">{{ p.pulse }}</span><span style="margin-top:6px;font-size:11px;color:var(--mut)">{{ p.n }}</span><span style="display:{{ p.lbl }};font-size:14px;font-weight:700;text-align:center;color:{{ p.fg }}">{{ p.t }}</span><span style="display:{{ p.lbl }};font-size:12px;text-align:center;color:var(--mut)">{{ p.s }}</span></button></sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:32px;margin-top:36px">
+<div style="padding:clamp(20px,3vw,28px);border:1px solid var(--line);border-radius:8px;background:var(--bg2);display:flex;flex-direction:column;gap:14px;min-height:320px">
+<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mut)"><span>step {{ me.n }} / 06</span><span>me::{{ me.k }}()</span></div>
+<div style="font-size:clamp(22px,3.5vw,28px);font-weight:800;letter-spacing:-0.03em">{{ me.title }}</div>
+<p style="margin:0;color:var(--mut);max-width:560px;text-wrap:pretty">{{ me.d }}</p>
+<div style="margin-top:auto;padding:14px 16px;border-radius:6px;background:var(--bg);border:1px solid var(--line);font-size:13px;display:flex;flex-direction:column;gap:2px;min-height:76px">
+<sc-for list="{{ me.log }}" as="ln" hint-placeholder-count="2"><div style="white-space:pre-wrap;overflow-wrap:anywhere;color:var(--acc)">{{ ln }}</div></sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<button onClick="{{ me.prev }}" style="background:transparent;border:1px solid var(--line);border-radius:4px;color:var(--fg);font:inherit;font-size:12px;padding:6px 12px;cursor:pointer" style-hover="border-color:var(--acc)">◀ prev</button>
+<button onClick="{{ me.toggle }}" style="background:transparent;border:1px solid var(--line);border-radius:4px;color:var(--fg);font:inherit;font-size:12px;padding:6px 12px;cursor:pointer;min-width:92px" style-hover="border-color:var(--acc)">{{ me.playLabel }}</button>
+<button onClick="{{ me.next }}" style="background:transparent;border:1px solid var(--line);border-radius:4px;color:var(--fg);font:inherit;font-size:12px;padding:6px 12px;cursor:pointer" style-hover="border-color:var(--acc)">next ▶</button>
+</div>
+</div>
+<div style="border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:13px;align-self:start">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)"><span style="font-weight:700">BTC/USDT · order book</span><span style="font-size:11px;padding:2px 8px;border-radius:4px;background:var(--accbg);color:var(--acc)">{{ me.incoming }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 64px;padding:8px 16px;color:var(--mut);font-size:11px"><span>price</span><span style="text-align:right">qty (BTC)</span><span></span></div>
+<sc-for list="{{ me.asks }}" as="r" hint-placeholder-count="3"><div style="position:relative;display:grid;grid-template-columns:1fr 1fr 64px;padding:7px 16px;background:{{ r.bg }};transition:background-color .4s"><span style="position:absolute;right:0;top:2px;bottom:2px;width:{{ r.depth }};background:{{ r.bar }}"></span><span style="position:relative;color:{{ r.pc }}">{{ r.p }}</span><span style="position:relative;text-align:right;text-decoration:{{ r.deco }}">{{ r.q }}</span><span style="position:relative;text-align:right;font-size:10px;letter-spacing:.08em;color:{{ r.tc }}">{{ r.tag }}</span></div></sc-for>
+<div style="display:flex;justify-content:space-between;padding:10px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px;color:var(--mut)"><span>{{ me.last }}</span><span>{{ me.spread }}</span></div>
+<sc-for list="{{ me.bids }}" as="r" hint-placeholder-count="3"><div style="position:relative;display:grid;grid-template-columns:1fr 1fr 64px;padding:7px 16px;background:{{ r.bg }};transition:background-color .4s"><span style="position:absolute;right:0;top:2px;bottom:2px;width:{{ r.depth }};background:{{ r.bar }}"></span><span style="position:relative;color:{{ r.pc }}">{{ r.p }}</span><span style="position:relative;text-align:right;text-decoration:{{ r.deco }}">{{ r.q }}</span><span style="position:relative;text-align:right;font-size:10px;letter-spacing:.08em;color:{{ r.tc }}">{{ r.tag }}</span></div></sc-for>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px;margin-top:40px;font-size:13.5px">
+<div><div style="color:var(--acc)">01</div><div style="margin-top:6px">Every order carries an idempotency key — retries never double-spend.</div></div>
+<div><div style="color:var(--acc)">02</div><div style="margin-top:6px">Double-entry ledger, fully rebuildable from the event log.</div></div>
+<div><div style="color:var(--acc)">03</div><div style="margin-top:6px">Deterministic matching — same input, same result.</div></div>
+</div>
+</section>
+
+<section id="a-contact" data-reveal="1" style="padding:clamp(56px,8vw,72px) var(--px) 40px;border-top:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px"><div style="font-size:14px"><span style="color:var(--acc)">$</span> ./contact.sh --hire</div><div style="color:var(--mut);font-size:12px">06 / 06</div></div>
+<h2 style="margin:0;font-size:clamp(30px,5.5vw,44px);line-height:1.15;font-weight:800;letter-spacing:-0.035em;max-width:900px;text-wrap:pretty">Need a backend engineer for a financial system?</h2>
+<p style="margin:16px 0 0;color:var(--mut);max-width:640px">Available for consulting and freelance: exchange backends, wallet systems, blockchain integration, architecture reviews.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;margin-top:36px">
+<a href="https://whoant.com" style="display:flex;justify-content:space-between;padding:18px 20px;border:1px solid var(--line);border-radius:8px" style-hover="border-color:var(--acc)"><span><span style="color:var(--mut)">web </span>whoant.com</span><span style="color:var(--acc)">↗</span></a>
+<a href="https://www.linkedin.com/in/whoant/" style="display:flex;justify-content:space-between;padding:18px 20px;border:1px solid var(--line);border-radius:8px" style-hover="border-color:var(--acc)"><span><span style="color:var(--mut)">linkedin </span>in/whoant</span><span style="color:var(--acc)">↗</span></a>
+<a href="https://github.com/whoant" style="display:flex;justify-content:space-between;padding:18px 20px;border:1px solid var(--line);border-radius:8px" style-hover="border-color:var(--acc)"><span><span style="color:var(--mut)">github </span>whoant</span><span style="color:var(--acc)">↗</span></a>
+</div>
+<footer style="display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--mut)"><span>© 2026 whoant</span><span>[process exited with code 0]</span></footer>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;green&quot;,&quot;amber&quot;,&quot;blue&quot;],&quot;default&quot;:&quot;green&quot;,&quot;tsType&quot;:&quot;'green'|'amber'|'blue'&quot;,&quot;section&quot;:&quot;Style&quot;},&quot;showTerminal&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;revealOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = { a: [], b: [], clock: '--:--:--', me: 0, mePlay: true, meNarrow: false };
+  archRef = React.createRef();
+  roots = { a: React.createRef(), b: React.createRef() };
+  outs = { a: React.createRef(), b: React.createRef() };
+  ins = { a: React.createRef(), b: React.createRef() };
+  mode = { a: { lang: 'en', theme: 'dark' }, b: { lang: 'en', theme: 'dark' } };
+  base = {
+    a: { dark: { '--bg': '#171411', '--bg2': '#1f1b17', '--fg': '#ece5d9', '--mut': '#9d9486', '--line': 'rgba(236,229,217,.12)' },
+         light: { '--bg': '#f3efe7', '--bg2': '#e9e3d8', '--fg': '#1c1915', '--mut': '#655d52', '--line': 'rgba(28,25,21,.14)' } },
+    b: { dark: { '--bg': '#0e0c0a', '--bg2': '#15120f', '--fg': '#efe9df', '--mut': '#918979', '--line': 'rgba(239,233,223,.11)', '--grid': 'rgba(239,233,223,.035)' },
+         light: { '--bg': '#f5f2ec', '--bg2': '#ebe6dc', '--fg': '#171411', '--mut': '#655d52', '--line': 'rgba(23,20,17,.12)', '--grid': 'rgba(23,20,17,.045)' } }
+  };
+  accents = { green: { dark: '#7fe0a0', light: '#23864a' }, amber: { dark: '#f0b45a', light: '#9a5c0a' }, blue: { dark: '#86bdf5', light: '#2a63b8' } };
+  cursor = React.createElement('span', { style: { display: 'inline-block', width: '0.5em', height: '0.82em', marginLeft: '0.12em', background: 'var(--acc)', verticalAlign: '-0.04em', animation: 'dcblink 1.05s steps(1) infinite' } });
+
+
+  meSteps = [
+    { k: 'ingest', t: 'Ingest', s: 'gateway → ME', title: 'Order arrives', d: 'A limit order lands on the inbound queue from the gateway. Nothing has touched the book yet.', log: ['← NEW  BUY LMT 1.50 BTC @ 64,215', '   id=ord_8f2a  tif=GTC'] },
+    { k: 'sequence', t: 'Sequence', s: 'seq# · journal', title: 'Sequenced & journaled', d: 'Every input gets a monotonic sequence number and is journaled before processing, so the book can be replayed bit-for-bit.', log: ['seq = 10,482,113', 'journal.append(ord_8f2a)  ✓ fsync'] },
+    { k: 'risk', t: 'Risk', s: 'balance lock', title: 'Pre-trade risk', d: 'Funds are reserved before the order can match. No lock, no trade.', log: ['lock 96,322.50 USDT  (1.50 × 64,215)', 'available 120,400.00 → 24,077.50'] },
+    { k: 'match', t: 'Match', s: 'price-time', title: 'Walk the book', d: 'The order crosses the best asks in price-time priority until its limit price or quantity runs out.', log: ['fill 0.40 @ 64,212  maker=ord_77c1', 'fill 0.60 @ 64,215  maker=ord_7a03', 'filled 1.00 / 1.50'] },
+    { k: 'rest', t: 'Rest', s: 'post remainder', title: 'Remainder rests', d: 'The unfilled 0.50 BTC is posted at its limit price and becomes the new best bid.', log: ['rest 0.50 @ 64,215  side=BID', 'best bid 64,205 → 64,215'] },
+    { k: 'publish', t: 'Publish', s: 'event log', title: 'Emit events', d: 'Results go out as ordered events. Ledger, market data and WebSocket feeds consume them independently.', log: ['→ TRADE ×2  → ORDER_PARTIAL  → BOOK_DELTA', '→ kafka: me.events  seq=10,482,113', 'ledger ✓  market-data ✓  ws ✓'] }
+  ];
+  meGo(i) { this.setState({ me: (i + 6) % 6, mePlay: false }); }
+  meVals() {
+    const i = this.state.me, st = this.meSteps[i];
+    const row = (p, q, side, state) => ({ p, q, depth: Math.min(100, parseFloat(q) / 2.2 * 100) + '%',
+      pc: side === 'ask' ? 'var(--ask)' : 'var(--acc)', bar: side === 'ask' ? 'var(--askbg)' : 'var(--accbg)',
+      bg: state === 'fill' ? 'var(--askbg)' : state === 'new' ? 'var(--accbg)' : 'transparent',
+      deco: state === 'fill' ? 'line-through' : 'none', tag: state === 'fill' ? 'FILLED' : state === 'new' ? 'NEW' : '',
+      tc: state === 'fill' ? 'var(--ask)' : 'var(--acc)' });
+    const asks = i < 4 ? [row('64,220.00', '0.80', 'ask'), row('64,215.00', '0.60', 'ask', i === 3 ? 'fill' : ''), row('64,212.00', '0.40', 'ask', i === 3 ? 'fill' : '')] : [row('64,220.00', '0.80', 'ask')];
+    const bids = (i >= 4 ? [row('64,215.00', '0.50', 'bid', 'new')] : []).concat([row('64,205.00', '1.10', 'bid'), row('64,200.00', '0.75', 'bid'), row('64,190.00', '2.00', 'bid')]);
+    return {
+      n: String(i + 1).padStart(2, '0'), k: st.k, title: st.title, d: st.d, log: st.log,
+      progress: (i / 5 * 83.3333) + '%', asks, bids,
+      incoming: i < 3 ? 'BUY 1.50 @ 64,215' : i === 3 ? 'remaining 0.50' : i === 4 ? '0.50 resting' : 'done · seq 10,482,113',
+      last: i >= 3 ? 'last 64,215.00' : 'last 64,208.00', spread: i >= 4 ? 'spread 5.00' : 'spread 7.00',
+      playLabel: this.state.mePlay ? '❚❚ pause' : '▶ play',
+      prev: () => this.meGo(i - 1), next: () => this.meGo(i + 1), toggle: () => this.setState(s => ({ mePlay: !s.mePlay })),
+      points: this.meSteps.map((p, j) => ({ n: String(j + 1).padStart(2, '0'), t: p.t, s: p.s, go: () => this.meGo(j),
+        bg: j <= i ? 'var(--acc)' : 'var(--bg)', bd: j <= i ? 'var(--acc)' : 'var(--mut)', fg: j === i ? 'var(--acc)' : 'var(--fg)',
+        pulse: j === i ? this.pulse : null, lbl: this.state.meNarrow ? 'none' : 'block' }))
+    };
+  }
+  pulse = React.createElement('span', { style: { position: 'absolute', inset: '-1px', borderRadius: '50%', border: '1px solid var(--acc)', animation: 'dcpulse 1.6s ease-out infinite' } });
+  rgba(h, a) { const n = parseInt(h.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
+  apply(k) {
+    const el = this.roots[k].current; if (!el) return;
+    const m = this.mode[k];
+    const acc = (this.accents[this.props.accent] || this.accents.green)[m.theme];
+    const v = { ...this.base[k][m.theme], '--acc': acc, '--accbg': this.rgba(acc, m.theme === 'dark' ? 0.1 : 0.09),
+      '--vi': m.lang === 'vi' ? 'inline' : 'none', '--en': m.lang === 'en' ? 'inline' : 'none',
+      '--viOp': m.lang === 'vi' ? '1' : '.4', '--enOp': m.lang === 'en' ? '1' : '.4',
+      '--dk': m.theme === 'dark' ? 'inline' : 'none', '--lt': m.theme === 'light' ? 'inline' : 'none' };
+    const ask = m.theme === 'dark' ? '#f0907c' : '#b4472f'; v['--ask'] = ask; v['--askbg'] = this.rgba(ask, m.theme === 'dark' ? 0.12 : 0.1);
+    for (const p in v) el.style.setProperty(p, v[p]);
+  }
+  setLang(k, l) { this.mode[k].lang = l; this.apply(k); }
+  toggleTheme(k) { this.mode[k].theme = this.mode[k].theme === 'dark' ? 'light' : 'dark'; this.apply(k); }
+
+  L(vi, en, c) { return { vi, en: en == null ? vi : en, c: c || 'var(--fg)' }; }
+  welcome() {
+    return [this.L('whoant shell v1.0', null, 'var(--mut)'),
+      this.L("Gõ 'help' để xem các lệnh.", "Type 'help' to list commands.", 'var(--acc)')];
+  }
+  run(k, raw) {
+    const cmd = (raw || '').trim(); if (!cmd) return;
+    const L = (a, b, c) => this.L(a, b, c), M = 'var(--mut)', A = 'var(--acc)';
+    const [c0, arg] = cmd.toLowerCase().split(/\s+/);
+    let out = [L('guest@whoant ~ % ' + cmd, null, M)];
+    const t = {
+      help: () => [L('Lệnh khả dụng:', 'Available commands:', A),
+        L('  whoami      tôi là ai', '  whoami      who I am'),
+        L('  exp         kinh nghiệm', '  exp         experience'),
+        L('  projects    dự án nổi bật', '  projects    selected work'),
+        L('  stack       công nghệ', '  stack       tech stack'),
+        L('  contact     liên hệ', '  contact     get in touch'),
+        L('  theme       sáng / tối', '  theme       light / dark'),
+        L('  clear       xoá màn hình', '  clear       clear screen')],
+      whoami: () => [L('Võ Văn Hoàng Tuân (whoant)', null, A),
+        L('Backend engineer · fintech & blockchain')],
+      exp: () => [L('02/2026 → nay      initX    hạ tầng sàn, matching engine', '02/2026 → now      initX    exchange infra, matching engine'),
+        L('10/2021 → 02/2026  Fiahub   sàn giao dịch, thanh toán, KYC/AML', '10/2021 → 02/2026  Fiahub   exchange, payments, KYC/AML')],
+      projects: () => [L('★77  react-story-facebook   JavaScript'), L('★74  ZingMp3API             Go'), L('★29  download-udemy         JavaScript'),
+        L('→ github.com/whoant (80 repo)', '→ github.com/whoant (80 repos)', M)],
+      stack: () => [L('go · rust · nodejs · postgresql · redis · kafka'), L('docker · kubernetes · prometheus · evm · bitcoin')],
+      contact: () => [L('web       whoant.com'), L('linkedin  linkedin.com/in/whoant'), L('github    github.com/whoant')],
+    };
+    t.ls = t.projects; t.experience = t.exp; t.about = t.whoami;
+    if (c0 === 'clear') { this.setState({ [k]: [] }); return; }
+    if (t[c0]) out = out.concat(t[c0]());
+    else if (c0 === 'lang') {
+      const l = arg === 'en' || arg === 'vi' ? arg : (this.mode[k].lang === 'vi' ? 'en' : 'vi');
+      this.setLang(k, l); out.push(L('Đã chuyển sang tiếng Việt.', 'Switched to English.', A));
+    } else if (c0 === 'theme') {
+      this.toggleTheme(k); out.push(L('theme → ' + this.mode[k].theme, null, A));
+    } else if (c0 === 'sudo') {
+      out.push(L('[sudo] password for guest: ********', null, M), L('✓ Đã cấp quyền. Nhắn tôi qua linkedin.com/in/whoant', '✓ Access granted. Ping me at linkedin.com/in/whoant', A));
+    } else out.push(L(`zsh: không tìm thấy lệnh: ${c0} — gõ 'help'`, `zsh: command not found: ${c0} — try 'help'`, M));
+    this.setState(s => ({ [k]: [...s[k], ...out] }));
+  }
+
+  tick() { this.setState({ clock: new Date(Date.now() + 7 * 3600e3).toISOString().slice(11, 19) }); }
+  setupReveal() {
+    if (this.props.revealOnScroll === false || !window.IntersectionObserver) return;
+    this.io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this.io.unobserve(e.target); }
+    }), { threshold: 0.06 });
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      el.style.transition = 'opacity .8s ease, transform .8s ease'; el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; this.io.observe(el);
+    });
+  }
+  componentDidMount() {
+    this.apply('a'); this.apply('b');
+    this.setState({ a: this.welcome(), b: this.welcome() });
+    this.tick(); this.timer = setInterval(() => this.tick(), 1000);
+    this.meTimer = setInterval(() => { if (this.state.mePlay) this.setState(s => ({ me: (s.me + 1) % 6 })); }, 3200);
+    setTimeout(() => this.setupReveal(), 50);
+    const chk = () => { const el = this.roots.a.current; if (!el) return; const n = el.clientWidth < 760; if (n !== this.state.meNarrow) this.setState({ meNarrow: n }); };
+    this.onResize = chk; window.addEventListener('resize', chk); setTimeout(chk, 0);
+    if (window.ResizeObserver) setTimeout(() => { const el = this.roots.a.current; if (el) { this.ro = new ResizeObserver(chk); this.ro.observe(el); } }, 0);
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearInterval(this.meTimer); this.ro && this.ro.disconnect(); window.removeEventListener('resize', this.onResize); this.io && this.io.disconnect(); }
+  componentDidUpdate(pp, ps) {
+    if (pp.accent !== this.props.accent) { this.apply('a'); this.apply('b'); }
+    ['a', 'b'].forEach(k => { if (ps[k] !== this.state[k]) { const o = this.outs[k].current; if (o) o.scrollTop = o.scrollHeight; } });
+  }
+  renderVals() {
+    const mk = k => ({
+      lines: this.state[k], outRef: this.outs[k], inRef: this.ins[k],
+      onKey: e => { if (e.key === 'Enter') { const v = e.target.value; e.target.value = ''; this.run(k, v); } },
+      focus: () => { const i = this.ins[k].current; if (i) i.focus({ preventScroll: true }); },
+      setVi: () => this.setLang(k, 'vi'), setEn: () => this.setLang(k, 'en'), toggleTheme: () => this.toggleTheme(k),
+      chips: ['help', 'whoami', 'exp', 'projects', 'contact', 'sudo hire-me'].map(c => ({ label: c, run: () => this.run(k, c) }))
+    });
+    return { rootA: this.roots.a, rootB: this.roots.b, a: mk('a'), b: mk('b'), clock: this.state.clock, cursor: this.cursor, me: this.meVals(), archRef: this.archRef, showTerminal: this.props.showTerminal ?? true };
+  }
+}
+</script>
+</body>
+</html>
